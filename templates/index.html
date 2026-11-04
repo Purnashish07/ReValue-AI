@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ReValue AI — E-waste recovery intelligence</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar"><a class="brand" href="/">♻ ReValue <span>AI</span></a><div class="topnote">E-WASTE RECOVERY INTELLIGENCE</div></header>
+<main class="shell">
+<section class="hero">
+<div class="eyebrow">COMPUTER VISION · CIRCULAR ELECTRONICS</div>
+<h1>Give discarded electronics<br><span>a second look.</span></h1>
+<p>Upload an image to create a preliminary component map and practical recovery report. AI suggestions are not a substitute for physical testing.</p>
+<div class="status"><i></i>{% if meta_api_configured %}Vision API configured{% else %}Demo mode · add model API credentials for image analysis{% endif %}</div>
+</section>
+<section class="workspace">
+<div class="panel upload-panel">
+<div class="section-head"><div><div class="eyebrow">STEP 01</div><h2>Inspect an item</h2></div><span class="step">01 / 03</span></div>
+<form id="uploadForm">
+<label class="dropzone" id="dropzone" for="imageInput">
+<div class="upload-icon">↑</div><strong>Drop an image here</strong><span>or click to browse · JPG, PNG, WEBP · max 10 MB</span>
+<input id="imageInput" name="image" type="file" accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp" required>
+</label>
+<div id="previewWrap" class="preview-wrap hidden"><img id="preview" alt="Selected e-waste preview"><button id="clearImage" type="button" class="text-button">Remove image</button></div>
+<button class="primary" id="analyzeBtn" type="submit">Analyze image <span>→</span></button>
+<div id="error" class="error hidden" role="alert"></div>
+<p class="fineprint">Images are processed by this local app and may be sent to the configured model provider for analysis. Do not upload sensitive images.</p>
+</form>
+</div>
+<div class="panel preview-panel">
+<div class="section-head"><div><div class="eyebrow">STEP 02</div><h2>Component map</h2></div><span class="tag">VISUAL ANALYSIS</span></div>
+<div id="mapEmpty" class="map-empty"><div class="orbit">⌁</div><strong>Your map will appear here</strong><span>Detections and bounding boxes are shown when the model provides usable coordinates.</span></div>
+<div id="mapWrap" class="map-wrap hidden"><div class="image-stage"><img id="mapImage" alt="Analyzed e-waste"><svg id="overlay" aria-label="Component bounding boxes"></svg></div><div id="legend" class="legend"></div></div>
+</div>
+</section>
+<section id="results" class="results hidden">
+<div class="section-head results-head"><div><div class="eyebrow">STEP 03</div><h2>Recovery intelligence</h2></div><button id="exportBtn" class="secondary">Export JSON ↓</button></div>
+<div class="summary-card"><div><div class="eyebrow">DEVICE SUMMARY</div><p id="summary"></p></div><div class="count"><strong id="componentCount">0</strong><span>items listed</span></div></div>
+<div class="result-grid">
+<div class="panel"><div class="eyebrow">COMPONENTS</div><h3>Visual observations</h3><div id="components"></div></div>
+<div class="panel"><div class="eyebrow">RECOMMENDED WORKFLOW</div><h3>Sorting plan</h3><ul id="sorting"></ul><h3 class="subhead">Safety notes</h3><ul id="safety"></ul><h3 class="subhead">Limitations</h3><ul id="limitations"></ul></div>
+</div>
+<div class="disclaimer">⚠ <strong>Preliminary visual triage only.</strong> Never infer battery health, electrical safety, precious-metal content, or component functionality from an image. Follow local e-waste rules and use qualified inspection.</div>
+</section>
+<footer><span>ReValue AI · Prototype</span><span>Built for a more circular electronics economy</span></footer>
+</main>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>
